@@ -25,30 +25,24 @@ class commands:
     def note(self, text):
         if "note" in text:
             print("Taking you to noting MODE")
+            self.say("Please say the notes")
             r = sr.Recognizer()
             # to close the mic after listening
             with sr.Microphone() as mic:
                 r.adjust_for_ambient_noise(mic) 
-                print("Listening for Input...\n")
+                print("Listening for notes...\n")
                 # listening the sudden change in amplitude in the voice input
                 audio = r.listen(mic)
                 # var for string of audio
                 said = ""
                 # update for progress
-                print("Recognizing the input\n")
+                print("Recognizing the note\n")
                 # in case error
                 try:
                     # synthesizing the raw audio
                     said = r.recognize_google(audio)
                     print("You said", said)
-                    # giving out the synthesized audio
-                    c.hi(said)
 
-                    c.exit(said)
-
-                    c.note(said)
-
-                    print("finished the cases, now restarting")
                 # Exception
                 except Exception as e:
                     print("Exception", str(e))

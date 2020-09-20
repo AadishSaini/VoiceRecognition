@@ -23,21 +23,35 @@ class commands:
             self.running = False
 
     def note(self, text):
-        if "note that" or "remember that" or "note" in text:
+        if "note" in text:
             print("Taking you to noting MODE")
             r = sr.Recognizer()
+            # to close the mic after listening
             with sr.Microphone() as mic:
-                self.say("Please say whatever you want to save")
-                print("Listening in noting mode")
+                r.adjust_for_ambient_noise(mic) 
+                print("Listening for Input...\n")
+                # listening the sudden change in amplitude in the voice input
                 audio = r.listen(mic)
+                # var for string of audio
                 said = ""
+                # update for progress
+                print("Recognizing the input\n")
+                # in case error
                 try:
-                    print("recognizing in noting mode")
+                    # synthesizing the raw audio
                     said = r.recognize_google(audio)
-                    if "exit" == said:
-                        self.running = False
+                    print("You said", said)
+                    # giving out the synthesized audio
+                    c.hi(said)
+
+                    c.exit(said)
+
+                    c.note(said)
+
+                    print("finished the cases, now restarting")
+                # Exception
                 except Exception as e:
-                    print("Noting error", str(e))
+                    print("Exception", str(e))
 
             now = datetime.now()
             current_time = now.strftime("%H:%M:%S")

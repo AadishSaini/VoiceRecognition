@@ -20,7 +20,7 @@ while c.running:
         r.adjust_for_ambient_noise(mic) 
         print("Listening for Input...\n")
         # listening the sudden change in amplitude in the voice input
-        audio = r.listen(mic,timeout=3)
+        audio = r.listen(mic)
         # var for string of audio
         said = ""
         # update for progress

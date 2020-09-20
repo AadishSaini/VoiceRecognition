@@ -7,8 +7,6 @@ engine = pyttsx3.init()
 # properties
 engine.setProperty('rate', 145)
 engine.setProperty('volume', 1)
-voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\MSTTS_V110_enUS_MarkM"
-engine.setProperty('voice', voice_id)
 
 # requirements
 c = commands()
@@ -19,9 +17,10 @@ while c.running:
     r = sr.Recognizer()
     # to close the mic after listening
     with sr.Microphone() as mic:
+        r.adjust_for_ambient_noise(mic) 
         print("Listening for Input...\n")
         # listening the sudden change in amplitude in the voice input
-        audio = r.listen(mic)
+        audio = r.listen(mic,timeout=3)
         # var for string of audio
         said = ""
         # update for progress
@@ -30,6 +29,7 @@ while c.running:
         try:
             # synthesizing the raw audio
             said = r.recognize_google(audio)
+            print("You said", said)
             # giving out the synthesized audio
             c.hi(said)
 
@@ -37,7 +37,6 @@ while c.running:
 
             c.note(said)
 
-            print(said)
             print("finished the cases, now restarting")
         # Exception
         except Exception as e:

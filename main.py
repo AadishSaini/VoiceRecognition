@@ -40,6 +40,8 @@ while c.running:
 
             c.date(said)
 
+            c.show_notes(said)
+
             print("finished the cases, now restarting")
         # Exception
         except Exception as e:

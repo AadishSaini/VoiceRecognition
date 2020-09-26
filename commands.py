@@ -48,14 +48,18 @@ class commands:
                 except Exception as e:
                     print("Exception", str(e))
 
-            now = datetime.now()
-            current_time = now.strftime("%H:%M:%S")
-            current_time = current_time.replace(":", "_")
-            with open(current_time, 'w+') as f:
-                f.write(said)
 
-            self.say("Saved the file")
-            print("Came out of noting mode")
+            if said == "cancel" or said == "exit":
+                self.say("Cacelled the noting")
+            else:
+                now = datetime.now()
+                current_time = now.strftime("%H:%M:%S")
+                current_time = current_time.replace(":", "_")
+                with open(current_time, 'w+') as f:
+                    f.write(said)
+
+                self.say("Saved the file")
+                print("Came out of noting mode")
 
     def sleep(self, text):
         if "sleep with pillow" in text:
@@ -69,3 +73,7 @@ class commands:
             current_time = now.strftime("%H:%M")
             current_time = current_time.replace(":", "_")
             self.say(current_time)
+
+    def show_notes(self, said):
+        if "show" in said and "notes" in said:
+            self.say("This part is under development")

@@ -8,7 +8,7 @@ NOTE - Using a virtual environment with all the modules/library installed, for t
 
 
 REQUIREMENTS :-
-   pyaudio
-   speech_recognition
+   pyaudio,
+   speech_recognition,
    pyttsx3
    

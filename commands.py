@@ -24,7 +24,7 @@ class commands:
             self.running = False
 
     def note(self, text):
-        if "note" in text:
+        if "note" in text and "take" in text:
             print("Taking you to noting MODE")
             self.say("Please say the notes")
             r = sr.Recognizer()

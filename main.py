@@ -1,3 +1,4 @@
+# rquirements
 import pyttsx3
 import speech_recognition as sr
 from commands import commands
@@ -17,7 +18,7 @@ while c.running:
     r = sr.Recognizer()
     # to close the mic after listening
     with sr.Microphone() as mic:
-        r.adjust_for_ambient_noise(mic) 
+        r.adjust_for_ambient_noise(mic)
         print("Listening for Input...\n")
         # listening the sudden change in amplitude in the voice input
         audio = r.listen(mic)

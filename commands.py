@@ -29,7 +29,7 @@ class commands:
             r = sr.Recognizer()
             # to close the mic after listening
             with sr.Microphone() as mic:
-                r.adjust_for_ambient_noise(mic) 
+                r.adjust_for_ambient_noise(mic)
                 print("Listening for notes...\n")
                 # listening the sudden change in amplitude in the voice input
                 audio = r.listen(mic)
@@ -60,3 +60,11 @@ class commands:
         if "sleep with pillow" in text:
             self.sleep = True
             print("sleeping")
+
+    def date(self, said):
+        if "time" in said and "what" in said:
+            print("Go check the Clock...")
+            now = datetime.now()
+            current_time = now.strftime("%H:%M")
+            current_time = current_time.replace(":", "_")
+            self.say(current_time)

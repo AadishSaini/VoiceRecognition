@@ -38,9 +38,12 @@ while c.running:
 
             c.note(said)
 
+            c.date(said)
+
             print("finished the cases, now restarting")
         # Exception
         except Exception as e:
             print("Exception", str(e))
+            c.say("Could not understand the speech, give it another try")
 
 c.say("Have a good day sir")

@@ -5,3 +5,10 @@
 
 
 NOTE - Using a virtual environment with all the modules/library installed, for testing purpose(venv is working only on windows os) refer to the venv folder for virtual python environment...
+
+
+REQUIREMENTS :-
+   pyaudio
+   speech_recognition
+   pyttsx3
+   

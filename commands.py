@@ -48,7 +48,6 @@ class commands:
                 except Exception as e:
                     print("Exception", str(e))
 
-
             if said == "cancel" or said == "exit":
                 self.say("Cacelled the noting")
             else:

@@ -34,6 +34,10 @@ while c.running:
             # giving out the synthesized audio
             c.hi(said)
 
+            c.name(said)
+
+            c.how(said)
+
             c.exit(said)
 
             c.note(said)

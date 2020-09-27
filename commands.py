@@ -23,6 +23,14 @@ class commands:
         engine.say(text)
         engine.runAndWait()
 
+    def name(self, text):
+        if "what" in text and "name" in text:
+            self.say("My name is lolo")
+
+    def how(self, text):
+        if "how" in text and "you" in text and "are" in text:
+            self.say("I am fit and fine, what can I do for you")
+
     def hi(self, text):
         if "hello" in text:
             self.say("Hello There, what can i do for you?\n")

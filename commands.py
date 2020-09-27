@@ -1,5 +1,6 @@
-from datetime import datetime
+from datetime import *
 
+import os
 import pyttsx3
 import speech_recognition as sr
 
@@ -9,6 +10,13 @@ class commands:
     def __init__(self):
         self.running = True
         self.sleep = False
+        self.date = str(date.today())
+        self.dirs = os.listdir()
+        if self.date in self.dirs:
+            pass
+        else:
+            with open(self.date, "w+") as f:
+                f.write("Today's Notes")
 
     def say(self, text):
         engine.say(text)
@@ -24,7 +32,7 @@ class commands:
             self.running = False
 
     def note(self, text):
-        if "note" in text and "take" in text:
+        if "note" in text and "write" in text:
             print("Taking you to noting MODE")
             self.say("Please say the notes")
             r = sr.Recognizer()
@@ -51,21 +59,15 @@ class commands:
             if said == "cancel" or said == "exit":
                 self.say("Cacelled the noting")
             else:
-                now = datetime.now()
-                current_time = now.strftime("%H:%M:%S")
-                current_time = current_time.replace(":", "_")
-                with open(current_time, 'w+') as f:
+                with open(self.date, "w") as f:
                     f.write(said)
-
-                self.say("Saved the file")
-                print("Came out of noting mode")
 
     def check_sleep(self, text):
         if "sleep with pillow" in text:
             self.sleep = True
             print("sleeping")
 
-    def date(self, said):
+    def time(self, said):
         if "time" in said and "what" in said:
             print("Go check the Clock...")
             now = datetime.now()

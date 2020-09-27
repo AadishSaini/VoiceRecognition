@@ -38,7 +38,7 @@ while c.running:
 
             c.note(said)
 
-            c.date(said)
+            c.time(said)
 
             c.show_notes(said)
 

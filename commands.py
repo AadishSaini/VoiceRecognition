@@ -79,5 +79,5 @@ class commands:
             self.say(current_time)
 
     def show_notes(self, said):
-        if "show" in said and "notes" in said:
+        if "tell" in said and "notes" in said:
             self.say("This part is under development")

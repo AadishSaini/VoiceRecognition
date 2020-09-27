@@ -12,6 +12,7 @@ class commands:
         self.sleep = False
         self.date = str(date.today())
         self.dirs = os.listdir()
+        self.note_t = 0
         if self.date in self.dirs:
             pass
         else:
@@ -33,6 +34,7 @@ class commands:
 
     def note(self, text):
         if "note" in text and "write" in text:
+            self.note_t+=1
             print("Taking you to noting MODE")
             self.say("Please say the notes")
             r = sr.Recognizer()
@@ -59,8 +61,9 @@ class commands:
             if said == "cancel" or said == "exit":
                 self.say("Cacelled the noting")
             else:
-                with open(self.date, "w") as f:
-                    f.write(said)
+                with open(self.date, "a") as f:
+                    f.write("\n")
+                    f.write(str(self.note_t)+") "+said)
 
     def check_sleep(self, text):
         if "sleep with pillow" in text:

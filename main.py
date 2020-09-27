@@ -42,6 +42,8 @@ while c.running:
 
             c.show_notes(said)
 
+            c.check_sleep(said)
+
             print("finished the cases, now restarting")
         # Exception
         except Exception as e:

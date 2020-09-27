@@ -60,7 +60,7 @@ class commands:
                 self.say("Saved the file")
                 print("Came out of noting mode")
 
-    def sleep(self, text):
+    def check_sleep(self, text):
         if "sleep with pillow" in text:
             self.sleep = True
             print("sleeping")

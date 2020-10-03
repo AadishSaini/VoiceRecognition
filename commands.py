@@ -72,11 +72,32 @@ class commands:
                 with open(self.date, "a") as f:
                     f.write("\n")
                     f.write(str(self.note_t)+") "+said)
+                    self.say("Saved the file")
 
     def check_sleep(self, text):
-        if "sleep with pillow" in text:
+        if "go to sleep" in text:
             self.sleep = True
-            print("sleeping")
+            self.say("Went to sleep mode")
+            while self.sleep:
+                r = sr.Recognizer()
+                with sr.Microphone() as mic:
+                    r.adjust_for_ambient_noise(mic)
+                    print("Waiting for the Wake Up Command\n")
+                    audio = r.listen(mic)
+                    said = ""
+                    print("Recognizing\n")
+                    try:
+                        said = r.recognize_google(audio)
+                        print(said)
+
+                    except Exception as e:
+                        print("Exception", str(e))
+                
+                if "get up" in said:
+                    self.sleep = False
+                    self.say("Welcome back sir")
+                else:
+                    self.sleep = True
 
     def time(self, said):
         if "time" in said and "what" in said:
@@ -88,4 +109,4 @@ class commands:
 
     def show_notes(self, said):
         if "tell" in said and "notes" in said:
-            self.say("This part is under development")
+            self.say("Under Development")

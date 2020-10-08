@@ -14,10 +14,17 @@ class commands:
         self.dirs = os.listdir()
         self.note_t = 0
         if self.date in self.dirs:
-            pass
+            with open("./NoteNumber/"+self.date, "r") as f:
+                self.note_t = int(f.read())
+                print(self.note_t)
         else:
             with open(self.date, "w+") as f:
                 f.write("Today's Notes")
+            os.chdir("./NoteNumber")
+            print(os.curdir)
+            with open(self.date, "w+") as f:
+                f.write("0")
+            os.chdir("..")
 
     def say(self, text):
         engine.say(text)
@@ -39,6 +46,10 @@ class commands:
         if "exit" in text:
             self.say("Exiting the program\n")
             self.running = False
+            os.chdir("./NoteNumber")
+            with open(self.date, "w+") as f:
+                f.write(str(self.note_t))
+            os.chdir("..")
 
     def note(self, text):
         if "note" in text and "write" in text:

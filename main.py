@@ -48,6 +48,8 @@ while c.running:
 
             c.check_sleep(said)
 
+            c.tell_age(said)
+
             print("finished the cases, now restarting")
         # Exception
         except Exception as e:

@@ -18,6 +18,7 @@ class commands:
                 self.note_t = int(f.read())
                 print(self.note_t)
         else:
+
             with open(self.date, "w+") as f:
                 f.write("Today's Notes")
             os.chdir("./NoteNumber")
@@ -121,3 +122,7 @@ class commands:
     def show_notes(self, said):
         if "tell" in said and "notes" in said:
             self.say("Under Development")
+
+    def tell_age(self, said):
+        if "age" in said and "what" in said:
+            self.say("My age is hundred years")

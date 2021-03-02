@@ -1,7 +1,14 @@
 # rquirements
 import pyttsx3
 import speech_recognition as sr
+from selenium import webdriver
 from commands import commands
+
+print("LOADING DRIVER")
+op = webdriver.ChromeOptions()
+op.add_argument('headless')
+driver = webdriver.Chrome("./chromedriver", options=op)
+print("LOADED DRIVER")
 
 engine = pyttsx3.init()
 

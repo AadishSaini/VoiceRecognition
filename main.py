@@ -2,13 +2,7 @@
 import pyttsx3
 import speech_recognition as sr
 from selenium import webdriver
-from commands import commands
-
-print("LOADING DRIVER")
-op = webdriver.ChromeOptions()
-op.add_argument('headless')
-driver = webdriver.Chrome("./chromedriver", options=op)
-print("LOADED DRIVER")
+from commands import commands, base_functions
 
 engine = pyttsx3.init()
 
@@ -16,9 +10,10 @@ engine = pyttsx3.init()
 engine.setProperty('rate', 145)
 engine.setProperty('volume', 1)
 
-# requirements
+# requirements-
 c = commands()
-c.say("Hello, I am lolo. I am your personal voice assistant")
+base = base_functions()
+base.say("Hello, I am lolo. I am your personal voice assistant")
 
 while c.running:
     # variable for recognizing
@@ -61,6 +56,6 @@ while c.running:
         # Exception
         except Exception as e:
             print("Exception", str(e))
-            c.say("Could not understand the speech, give it another try")
+            base.say("Could not understand the speech, give it another try")
 
-c.say("Have a good day sir")
+base.say("Have a good day sir")

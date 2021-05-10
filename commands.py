@@ -1,10 +1,26 @@
 from datetime import *
 
 import os
+import platform
 import pyttsx3
 import speech_recognition as sr
-
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException 
+import wikipedia
+plat = platform.platform()
 engine = pyttsx3.init()
+
+class base_functions:
+    def __init__(self):
+        pass
+
+    def say(self, text):
+        engine.say(text)
+        engine.runAndWait()
+
 
 class commands:
     def __init__(self):
@@ -12,7 +28,14 @@ class commands:
         self.sleep = False
         self.date = str(date.today())
         self.dirs = os.listdir()
+        self.base = base_functions()
         self.note_t = 0
+        op = webdriver.ChromeOptions()
+        op.add_argument('headless')
+        if "Linux" in plat:
+            self.driver = webdriver.Chrome("./chromedriver", options=op)
+        if "Windows" in plat:
+            self.driver = webdriver.Chrome("./chromedriver.exe", options=op)
         if self.date in self.dirs:
             with open("./NoteNumber/"+self.date, "r") as f:
                 self.note_t = int(f.read())
@@ -27,25 +50,21 @@ class commands:
                 f.write("0")
             os.chdir("..")
 
-    def say(self, text):
-        engine.say(text)
-        engine.runAndWait()
-
     def name(self, text):
         if "what" in text and "name" in text:
-            self.say("My name is lolo")
+            self.base.say("My name is lolo")
 
     def how(self, text):
         if "how" in text and "you" in text and "are" in text:
-            self.say("I am fit and fine, what can I do for you")
+            self.base.say("I am fit and fine, what can I do for you")
 
     def hi(self, text):
         if "hello" in text:
-            self.say("Hello There, what can i do for you?\n")
+            self.base.say("Hello There, what can i do for you?\n")
 
     def exit(self, text):
         if "exit" in text:
-            self.say("Exiting the program\n")
+            self.base.say("Exiting the program\n")
             self.running = False
             os.chdir("./NoteNumber")
             with open(self.date, "w+") as f:
@@ -56,7 +75,7 @@ class commands:
         if "note" in text and "write" in text:
             self.note_t+=1
             print("Taking you to noting MODE")
-            self.say("Please say the notes")
+            self.base.say("Please say the notes")
             r = sr.Recognizer()
             # to close the mic after listening
             with sr.Microphone() as mic:
@@ -79,17 +98,17 @@ class commands:
                     print("Exception", str(e))
 
             if said == "cancel" or said == "exit":
-                self.say("Cacelled the noting")
+                self.base.say("Cacelled the noting")
             else:
                 with open(self.date, "a") as f:
                     f.write("\n")
                     f.write(str(self.note_t)+") "+said)
-                    self.say("Saved the file")
+                    self.base.say("Saved the file")
 
     def check_sleep(self, text):
         if "go to sleep" in text:
             self.sleep = True
-            self.say("Went to sleep mode")
+            self.base.say("Went to sleep mode")
             while self.sleep:
                 r = sr.Recognizer()
                 with sr.Microphone() as mic:
@@ -107,7 +126,7 @@ class commands:
                 
                 if "get up" in said:
                     self.sleep = False
-                    self.say("Welcome back sir")
+                    self.base.say("Welcome back sir")
                 else:
                     self.sleep = True
 
@@ -117,12 +136,12 @@ class commands:
             now = datetime.now()
             current_time = now.strftime("%H:%M")
             current_time = current_time.replace(":", "_")
-            self.say(current_time)
+            self.base.say(current_time)
 
     def show_notes(self, said):
         if "tell" in said and "notes" in said:
-            self.say("Under Development")
+            self.base.say("Under Development")
 
     def tell_age(self, said):
         if "age" in said and "what" in said:
-            self.say("My age is hundred years")
+            self.base.say("My age is hundred years")

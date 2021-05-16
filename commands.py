@@ -1,5 +1,6 @@
 from datetime import *
-
+import pandas as pd 
+from google_trans_new import google_translator
 import os
 import platform
 import pyttsx3
@@ -9,9 +10,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException 
+import threading
 import wikipedia
+
 plat = platform.platform()
 engine = pyttsx3.init()
+rate = engine.getProperty('rate')
+engine.setProperty('rate', 130)
+translator = google_translator()  
 
 class base_functions:
     def __init__(self):
@@ -27,7 +33,9 @@ class commands:
         self.running = True
         self.sleep = False
         self.date = str(date.today())
-        self.dirs = os.listdir()
+        os.chdir("./Notes")
+        self.dirs_note_dir = os.listdir()
+        os.chdir("..")
         self.base = base_functions()
         self.note_t = 0
         op = webdriver.ChromeOptions()
@@ -35,20 +43,27 @@ class commands:
         if "Linux" in plat:
             self.driver = webdriver.Chrome("./chromedriver", options=op)
         if "Windows" in plat:
+            engine.setProperty('voice', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0')
             self.driver = webdriver.Chrome("./chromedriver.exe", options=op)
-        if self.date in self.dirs:
-            with open("./NoteNumber/"+self.date, "r") as f:
+        if self.date in self.dirs_note_dir:
+            os.chdir("./NoteNumber")
+            with open(self.date, "r") as f:
                 self.note_t = int(f.read())
                 print(self.note_t)
+            os.chdir("..")
         else:
-
+            os.chdir("./Notes")
             with open(self.date, "w+") as f:
                 f.write("Today's Notes")
+            os.chdir('..')
             os.chdir("./NoteNumber")
             print(os.curdir)
             with open(self.date, "w+") as f:
                 f.write("0")
             os.chdir("..")
+
+    def check_termination(self):
+        pass
 
     def name(self, text):
         if "what" in text and "name" in text:
@@ -100,10 +115,12 @@ class commands:
             if said == "cancel" or said == "exit":
                 self.base.say("Cacelled the noting")
             else:
+                os.chdir("./Notes")
                 with open(self.date, "a") as f:
                     f.write("\n")
-                    f.write(str(self.note_t)+") "+said)
+                    f.write(str(self.note_t)+" ) "+said)
                     self.base.say("Saved the file")
+                os.chdir("..")
 
     def check_sleep(self, text):
         if "go to sleep" in text:
@@ -145,3 +162,13 @@ class commands:
     def tell_age(self, said):
         if "age" in said and "what" in said:
             self.base.say("My age is hundred years")
+
+    def wiki_search(self, said):
+        if "search Wikipedia" in said:
+            self.base.say(wikipedia.summary(said[18:]))
+            wikipedia.summary(said[18:])
+
+    def translate(self, said):
+        if 'translate' in said and 'for me' in said:
+            to_translate_temp = said[17:]
+            self.base.say("Indev")

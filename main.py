@@ -15,6 +15,8 @@ c = commands()
 base = base_functions()
 base.say("Hello, I am lolo. I am your personal voice assistant")
 
+c.check_termination()
+
 while c.running:
     # variable for recognizing
     r = sr.Recognizer()
@@ -51,11 +53,14 @@ while c.running:
             c.check_sleep(said)
 
             c.tell_age(said)
+            
+            c.wiki_search(said)
 
+            c.translate(said)
             print("finished the cases, now restarting")
         # Exception
         except Exception as e:
             print("Exception", str(e))
-            base.say("Could not understand the speech, give it another try")
+            base.say("EC")
 
 base.say("Have a good day sir")
